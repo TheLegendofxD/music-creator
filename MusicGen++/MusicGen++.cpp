@@ -7,7 +7,10 @@
 #include <vector>
 #include <map>
 
-const std::string VERSION = "1.0";
+const int VERSION_MAJOR = 1;
+const int VERSION_MINOR = 0;
+const int VERSION_PATCH = 0;
+const std::string VERSION_SUFFIX = "-release";
 const int SAMPLE_RATE = 44100;
 const int DURATION = 1;
 const int BIT_DEPTH = 16;
@@ -303,7 +306,7 @@ int main(int argc, char** argv)
             exit(0);
         }
         else if (current_arg == "--version") {
-            std::cout << "Paul's Music Generator v" << VERSION << "\nCopyright (c) 2022 The_Legend_of_xD" << std::endl;
+            std::cout << "Paul's Music Generator v" << VERSION_MAJOR << "." << VERSION_MINOR << "." << VERSION_PATCH << VERSION_SUFFIX << "\nCopyright (c) 2022 The_Legend_of_xD" << std::endl;
             exit(0);
         }
     }
@@ -321,7 +324,7 @@ int main(int argc, char** argv)
     // Doing File stuff
     std::ofstream file;
     std::vector<std::string> lines = read_file(input_file, verbose);
-    file.open(output_file, std::ios::binary); /* Kinder... Denkt immer 'dran, den Binary-Mode zu verwenden, wenn ihr Binaryfiles schreiben wollt! Nicht std::ios::out*/
+    file.open(output_file, std::ios::binary); /* Kinder... Denkt immer 'dran, den Binary-Mode zu verwenden, wenn ihr Binaryfiles schreiben wollt! Nicht std::ios::out */
 
     try {
         add_header(file);
@@ -352,7 +355,7 @@ int main(int argc, char** argv)
                 generate_freq(file, sine_wave, NOTES.at(params), current_duration, fadeout_enabled, use_square_wave);
                 break;
             case FREQ:
-                generate_freq(file, sine_wave, std::stof(params), current_duration);
+                generate_freq(file, sine_wave, std::stof(params), current_duration, fadeout_enabled, use_square_wave);
                 break;
             case PAUSE:
                 generate_silence(file, current_duration);
